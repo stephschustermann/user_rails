@@ -1,4 +1,4 @@
-class EndpointsController < ApplicationController
+class UsersController < ApplicationController
     before_action :ensure_params_exist, only: :create
     def create
         user = User.new user_params
@@ -19,7 +19,7 @@ class EndpointsController < ApplicationController
        end
     end
 
-    def all
+    def show
         @users = User.all
         #users_serializer = parse_json @users
         render json: {
@@ -31,7 +31,7 @@ class EndpointsController < ApplicationController
         }, status: :ok
     end
   
-    def findById
+    def index
         @user = User.find(params[:id])
         if @user
             render json: {
