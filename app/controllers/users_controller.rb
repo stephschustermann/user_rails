@@ -1,53 +1,23 @@
 class UsersController < ApplicationController
     before_action :ensure_params_exist, only: :create
+    rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
     def create
         user = User.new user_params
         if user.save
-            render json: {
-                messages: "Success",
-                is_success: true,
-                data: {
-                    user: user
-                }
-            }, status: :ok
+            json_response "Success", true, { user: user }, :ok
        else
-            render json: {
-                messages: "Something went wrong.",
-                is_success: false,
-                data: {}
-            }, status: :unprocessable_entity
+            json_response "Something went wrong.", false, { }, :unprocessable_entity
        end
     end
 
     def show
         @users = User.all
-        #users_serializer = parse_json @users
-        render json: {
-                messages: "Success",
-                is_success: true,
-                data: {
-                    users: @users
-                }
-        }, status: :ok
+        json_response "Success", true, { users: @users }, :ok
     end
   
     def index
         @user = User.find(params[:id])
-        if @user
-            render json: {
-                messages: "Success",
-                is_success: true,
-                data: {
-                    user: @user
-                }
-            }, status: :ok
-        else
-            render json: {
-                messages: "User not found",
-                is_success: false,
-                data: {}
-            }, status: :not_found
-        end
+        json_response "Success", true, { user: @user }, :ok
     end
 
     private
@@ -57,10 +27,10 @@ class UsersController < ApplicationController
   
     def ensure_params_exist
         return if params[:user].present?
-        render json: {
-            messages: "Missing params",
-            is_success: false,
-            data: {}
-        }, status: :bad_request
+        json_response "Missing params.", false, { }, :bad_request
     end
+
+    def record_not_found
+        json_response "User not found.", false, { }, :not_found
+      end
   end
