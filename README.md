@@ -1,5 +1,7 @@
 # USER API
 
+NOTE: In order to get a better management with the user password, I've installed Devise
+
 1. To sign up new user:
 ```
 curl --location --request POST 'localhost:3000/users' \
@@ -35,7 +37,7 @@ curl --location --request POST 'localhost:3000/sign_in' \
 ```
 
 You will get with the response the following cookie:
-```--header 'Cookie: AUTH-TOKEN=sjKfAAk4HYxnwpVHf8wAsCtA' \```
+```'Cookie: AUTH-TOKEN=sjKfAAk4HYxnwpVHf8wAsCtA' ```
 
 5. To sign out user:
 
