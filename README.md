@@ -1,24 +1,46 @@
-# README
+# USER API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. To sign up new user:
+```
+curl --location --request POST 'localhost:3000/users' \
+--form 'user[email]=schusterann11@gmail.com' \
+--form 'user[password]=123456' \
+--form 'user[password_confirmation]=123456' \
+--form 'user[first_name]=steph1' \
+--form 'user[last_name]=schustermann'
 
-Things you may want to cover:
+```
 
-* Ruby version
+2. To get all the created users:
 
-* System dependencies
+```
+curl --location --request GET 'localhost:3000/users'
 
-* Configuration
+```
 
-* Database creation
+3. To get specific user with id = 1:
 
-* Database initialization
+```
+curl --location --request GET 'localhost:3000/users/1'
 
-* How to run the test suite
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+4. To sign in user:
 
-* Deployment instructions
+```
+curl --location --request POST 'localhost:3000/sign_in' \
+--form 'sign_in[email]=schusteann11@gmail.com' \
+--form 'sign_in[password]=123456'
 
-* ...
+```
+
+You will get with the response the following cookie:
+```--header 'Cookie: AUTH-TOKEN=sjKfAAk4HYxnwpVHf8wAsCtA' \```
+
+5. To sign out user:
+
+```
+curl --location --request DELETE 'localhost:3000/sign_out' \
+--header 'Cookie: AUTH-TOKEN=sjKfAAk4HYxnwpVHf8wAsCtA'
+
+```
