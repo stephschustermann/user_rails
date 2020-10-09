@@ -1,9 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
     before_action :ensure_params_exist, only: :create
-  # sign up
+    skip_before_action :verify_authenticity_token
+
   def create
     user = User.new user_params
-    puts user.inspect
+    user.generate_new_authentication_token
     if user.save!
       json_response "Signed Up successfully", true, {user: user}, :ok
     else
